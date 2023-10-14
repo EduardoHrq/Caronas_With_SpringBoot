@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+
+  color: #FFF;
+
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+
+  padding: 12px;
+
+  overflow-x: hidden;
+}
+
+.passagem {
+  border-top: 10px dashed black;
+  border-bottom: 10px dashed black;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 20px;
+  text-align: center;
+}
+
+#carona tbody td:nth-child(1) {
+  border-radius: 12px 0 0 12px;
+}
+
+#carona tbody td:nth-child(5) {
+  border-radius: 0 12px 12px 0;
+}
+
+#carona tbody tr:nth-child(odd) {
+  background-color: #18181b;
+}
+
+@keyframes carregar {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+#carona tbody tr:nth-child(1n) {
+  animation: carregar 1s ease;
+}

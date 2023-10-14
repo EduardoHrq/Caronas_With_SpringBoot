@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="./global.css"> -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Caronas</title>
+</head>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  box-sizing: border-box;
+
+  color: #FFF;
+
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+
+  padding: 12px;
+
+  overflow-x: hidden;
+}
+
+.passagem {
+  border-top: 10px dashed black;
+  border-bottom: 10px dashed black;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 12px 20px;
+  text-align: center;
+}
+
+#carona tbody td:nth-child(1) {
+  border-radius: 12px 0 0 12px;
+}
+
+#carona tbody td:nth-child(5) {
+  border-radius: 0 12px 12px 0;
+}
+
+#carona tbody tr:nth-child(odd) {
+  background-color: #18181b;
+}
+
+@keyframes carregar {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+#carona tbody tr:nth-child(1n) {
+  animation: carregar 1s ease;
+}
+</style>
+
+<body class="flex flex-col bg-black">
+
+  <header class="relative">
+    <h2 class="text-[30pt] font-bold text-center">CARONAS</h2>
+    <a href="./pages/historico.php"
+      class="w-[25px] h-[25px] absolute top-[50%] left-[95%] translate-y-[-50%] rounded-full flex items-center justify-center text-black">
+      <i class="ph-fill ph-clock-counter-clockwise text-[25pt]"></i>
+    </a>
+  </header>
+
+  <main class="w-full h-full flex flex-col md:flex-row items-center md:justify-evenly">
+
+    <section class="w-[320px] bg-zinc-900 p-3 rounded-xl flex flex-col gap-4 passagem">
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl text-center py-4 flex flex-col gap-3">
+        <div id="nome" class="text-[18pt]">Malu</div>
+        <div class="flex items-center justify-evenly">
+          <form action="data/increments/meia/1" method="post">
+            <button class="p-2 w-[100px] bg-indigo-500 rounded-lg">MEIA</button>
+          </form>
+          <form action="data/increments/inteira/1" method="post">
+            <button class="p-2 w-[100px] bg-indigo-500 rounded-lg">INTEIRA</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl text-center py-4 flex flex-col gap-3">
+        <div id="nome" class="text-[18pt]">João</div>
+        <div class="flex items-center justify-evenly">
+          <form action="data/increments/meia/2" method="post">
+            <button class="p-2 w-[100px] bg-indigo-500 rounded-lg">MEIA</button>
+          </form>
+          <form action="data/increments/inteira/2" method="post">
+            <button class="p-2 w-[100px] bg-indigo-500 rounded-lg">INTEIRA</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="bg-slate-800 bg-opacity-50 rounded-xl text-center py-4 flex flex-col gap-3">
+        <div id="nome" class="text-[18pt]">Henrique</div>
+        <div class="flex items-center justify-evenly">
+          <form action="data/increments/meia/3" method="post">
+            <button class="p-2 w-[100px] bg-indigo-500 rounded-lg">MEIA</button>
+          </form>
+          <form action="data/increments/inteira/3" method="post">
+            <button class="p-2 w-[100px] bg-indigo-500 rounded-lg">INTEIRA</button>
+          </form>
+        </div>
+      </div>
+
+    </section>
+
+    <div class="h-full flex flex-col items-center justify-evenly">
+      <section>
+        <table id="carona">
+          <thead>
+            <tr>
+              <th>Nome</th>
+              <th>Inteiras</th>
+              <th>Meias</th>
+              <th>Devendo</th>
+              <td></td>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="user : ${model}">
+              <td class="w-[200px] relative">
+                <a href=""
+                  class="w-[25px] h-[25px] absolute top-[50%] left-[-10px] translate-y-[-50%] bg-zinc-300 rounded-full flex items-center justify-center text-black">
+                  +
+                  <div class="absolute w-[10px] h-[10px] rounded-full bg-red-500 top-[-2px] right-[-2px]"></div>
+                </a>
+                
+                <div th:text="${user.nome}" id="${'teste'+user.id}"></div>
+
+
+              </td>
+
+              <td th:text="${user.inteira}"></td>
+
+              <td th:text="${user.meia}"></td>
+
+              <td>
+                <div th:text="${(user.inteira * 11) + (user.meia * 6)}"
+                  class="valorMonetario bg-indigo-500 p-3 rounded-xl font-bold hover:scale-[1.2] transition-all duration-300">
+                </div>
+              </td>
+              <td>
+                <form action="" th:action="@{/data/pay/{id}(id=${user.id})}" method="post">
+                  <button class="p-3 rounded-xl bg-green-600 font-bold" type="submit">PAGO</button>
+                </form>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- <section>
+        <?php require_once './components/semana.php' ?>
+      </section> -->
+    </div>
+
+  </main>
+
+  <script>
+    let valor = document.getElementsByClassName("valorMonetario");
+
+    for (let num = 0; num < valor.length; num++) {
+      valor[num].innerHTML = parseInt(valor[num].textContent).toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL"
+      })
+    }
+  </script>
+
+</body>
+
+</html>
